@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIN Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .bin-list {
+            margin-top: 20px;
+        }
+        .bin-details {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>BIN Checker</h1>
+        <textarea id="binList" rows="10" cols="50" placeholder="Enter BINs separated by new lines"></textarea><br>
+        <button onclick="checkBINs()">Check BINs</button>
+        <div class="bin-details" id="binDetails"></div>
+    </div>
+
+    <script>
+        // Sample BIN data for demonstration purposes
+        const binData = {
+            "411111": { "bank": "Test Bank 1", "country": "USA", "type": "Visa" },
+            "510510": { "bank": "Test Bank 2", "country": "Canada", "type": "MasterCard" },
+            "601100": { "bank": "Test Bank 3", "country": "Germany", "type": "Discover" },
+            "378282": { "bank": "Test Bank 4", "country": "UK", "type": "American Express" }
+            // Add more BIN data as needed
+        };
+
+        function checkBINs() {
+            const binList = document.getElementById('binList').value.trim().split('\n');
+            const binDetailsDiv = document.getElementById('binDetails');
+            binDetailsDiv.innerHTML = '';
+
+            binList.forEach(bin => {
+                const details = binData[bin];
+                if (details) {
+                    const detailsHTML = `
+                        <div class="bin-detail">
+                            <h3>BIN: ${bin}</h3>
+                            <p>Bank: ${details.bank}</p>
+                            <p>Country: ${details.country}</p>
+                            <p>Type: ${details.type}</p>
+                        </div>
+                    `;
+                    binDetailsDiv.innerHTML += detailsHTML;
+                } else {
+                    const detailsHTML = `
+                        <div class="bin-detail">
+                            <h3>BIN: ${bin}</h3>
+                            <p>No details found for this BIN.</p>
+                        </div>
+                    `;
+                    binDetailsDiv.innerHTML += detailsHTML;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
